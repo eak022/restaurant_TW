@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Add() {
   const navigate = useNavigate();
@@ -33,17 +34,17 @@ function Add() {
     })
       .then((res) => {
         if (res.ok) {
-          alert("Saved successfully");
-          navigate("/");
+          Swal.fire("Success", "Saved successfully", "success").then(() => {
+            navigate("/");
+          });
         } else {
           throw new Error("Network response was not ok");
         }
       })
       .catch((err) => {
+        Swal.fire("Error", "Failed to save restaurant", "error");
         console.error("Error:", err);
       });
-
-    console.log("Submitted:", newRestaurantData);
 
     setRestaurantData({
       name: "",

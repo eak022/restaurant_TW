@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Edit = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const Edit = () => {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:3000/restaurant/`+id)
+    fetch(`http://localhost:3000/restaurant/` + id)
       .then((res) => res.json())
       .then((data) => {
         setRestaurant(data);
@@ -42,13 +43,15 @@ const Edit = () => {
     })
       .then((res) => {
         if (res.ok) {
-          alert("Saved successfully");
-          navigate("/");
+          Swal.fire("Success", "Saved successfully", "success").then(() => {
+            navigate("/");
+          });
         } else {
           throw new Error("Network response was not ok");
         }
       })
       .catch((err) => {
+        Swal.fire("Error", "Failed to save changes", "error");
         console.error("Error:", err);
       });
   };
