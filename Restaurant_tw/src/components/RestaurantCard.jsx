@@ -34,7 +34,7 @@ const RestaurantCard = ({ id, name, img, rtype }) => {
 
           <a
             href={`/Edit/${id}`}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-3"
+            className="inline-flex items-center px-3 py-2 px-4 bg-[#22c55e] text-white rounded hover:bg-[#16a34a] focus:outline-none focus:ring-2 focus:ring-[#16a34a] focus:ring-offset-2 transition duration-300"
           >
             Edit
             <svg
@@ -54,7 +54,7 @@ const RestaurantCard = ({ id, name, img, rtype }) => {
             </svg>
           </a>
           <a
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="inline-flex items-center mx-3 px-3 py-2 px-4 bg-[#22c55e] text-white rounded hover:bg-[#16a34a] focus:outline-none focus:ring-2 focus:ring-[#16a34a] focus:ring-offset-2 transition duration-300"
             onClick={() => handleDelete(id)}
           >
             Delete
