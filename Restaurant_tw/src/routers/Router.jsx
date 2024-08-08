@@ -1,10 +1,11 @@
-import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
-import Home from '../pages/home.jsx';
-import Add from '../pages/Add.jsx';
-import Edit from '../pages/Edit.jsx';
-import Login from '../pages/Login.jsx'; 
-import Register from '../pages/Register.jsx';
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import Home from "../pages/home.jsx";
+import Add from "../pages/Add.jsx";
+import Edit from "../pages/Edit.jsx";
+import Login from "../pages/Login.jsx";
+import Register from "../pages/Register.jsx";
+import Layout from "../components/Layout.jsx";
 
 const router = createBrowserRouter([
   {

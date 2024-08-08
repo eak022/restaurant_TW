@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthService from '../services/auth.service';
-import Swal from 'sweetalert2';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "../services/api";
+import AuthService from "../services/auth.service";
+import Swal from "sweetalert2";
 
 function Register() {
   const [user, setUser] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
   });
@@ -22,25 +23,29 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await AuthService.register(user.username, user.email, user.password);
-      console.log('Registration successful:', response);
+      const response = await AuthService.register(
+        user.userName,
+        user.email,
+        user.password
+      );
+      console.log("Registration successful:", response);
 
       Swal.fire({
-        title: 'Success!',
-        text: 'Registration successful. Please log in.',
-        icon: 'success',
-        confirmButtonText: 'OK'
+        title: "Success!",
+        text: "Registration successful. Please log in.",
+        icon: "success",
+        confirmButtonText: "OK",
       }).then(() => {
-        navigate('/login');
+        navigate("/login");
       });
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.error("Registration failed:", error);
 
       Swal.fire({
-        title: 'Error!',
-        text: 'Registration failed. Please try again.',
-        icon: 'error',
-        confirmButtonText: 'OK'
+        title: "Error!",
+        text: "Registration failed. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
 
       setError("Registration failed. Please try again.");
@@ -48,13 +53,15 @@ function Register() {
   };
 
   const handleCancel = () => {
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Register</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+          Register
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && <p className="text-red-500">{error}</p>}
           <div>
@@ -70,7 +77,7 @@ function Register() {
           <div>
             <input
               type="text"
-              name="username"
+              name="userName"
               onChange={handleChange}
               required
               placeholder="Username"

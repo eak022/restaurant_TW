@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
-import UserProfile from './UserProfile';
+import React, { useState } from "react";
+import UserProfile from "./UserProfile";
+import { useAuthContext } from "../context/AuthContext";
 
-function Nav() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const onButtonClick = () => {
-    // Define the functionality for button click here
-  };
-
-  const onButtonEnter = () => {
-    // Define the functionality for button enter (keypress) here
-  };
+const Nav = () => {
+  const { user } = useAuthContext();
 
   return (
     <nav className="border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 w-full">
@@ -44,7 +37,10 @@ function Nav() {
             />
           </svg>
         </button>
-        <div className="hidden w-full md:flex md:items-center md:justify-center md:w-auto" id="navbar-solid-bg">
+        <div
+          className="hidden w-full md:flex md:items-center md:justify-center md:w-auto"
+          id="navbar-solid-bg"
+        >
           <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
             <li>
               <a
@@ -66,8 +62,11 @@ function Nav() {
           </ul>
         </div>
         <div className="hidden md:flex md:items-center">
-          {isLoggedIn ? (
-            <UserProfile onButtonClick={onButtonClick} onButtonEnter={onButtonEnter} />
+          {user ? (
+            <UserProfile
+              onButtonClick={onButtonClick}
+              onButtonEnter={onButtonEnter}
+            />
           ) : (
             <div className="flex space-x-4">
               <a
@@ -88,6 +87,6 @@ function Nav() {
       </div>
     </nav>
   );
-}
+};
 
 export default Nav;
