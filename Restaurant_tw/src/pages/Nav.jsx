@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
-import UserProfile from './UserProfile';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import UserProfile from "../components/UserProfile";
+import LoginButton from "../components/LoginButton";
+import RegisterButton from "../components/RegisterButton";
+import { useAuthContext } from "../context/AuthContext";
 
-function Nav() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Nav = () => {
+  const { user } = useAuthContext();
+  const location = useLocation();
 
-  const onButtonClick = () => {
-    // Define the functionality for button click here
-  };
-
-  const onButtonEnter = () => {
-    // Define the functionality for button enter (keypress) here
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="border-gray-200 bg-white dark:bg-gray-800 dark:border-gray-700 w-full">
       <div className="flex flex-wrap items-center justify-between mx-auto p-4 w-full">
-        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-[#22c55e]">
-            Grap Restaurant
+            Grab Restaurant
           </span>
-        </a>
+        </Link>
         <button
           data-collapse-toggle="navbar-solid-bg"
           type="button"
@@ -47,47 +46,59 @@ function Nav() {
         <div className="hidden w-full md:flex md:items-center md:justify-center md:w-auto" id="navbar-solid-bg">
           <ul className="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
             <li>
-              <a
-                href="/"
-                className="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-[#22c55e] md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
+              <Link
+                to="/"
+                className={`block py-2 px-3 md:p-0 rounded ${isActive("/") ? "text-[#22c55e]" : "text-black"} hover:text-[#22c55e]`}
                 aria-current="page"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/add"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              <Link
+                to="/add"
+                className={`block py-2 px-3 md:p-0 rounded ${isActive("/add") ? "text-[#22c55e]" : "text-black"} hover:text-[#22c55e]`}
               >
                 Add
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
         <div className="hidden md:flex md:items-center">
-          {isLoggedIn ? (
-            <UserProfile onButtonClick={onButtonClick} onButtonEnter={onButtonEnter} />
+          {user ? (
+            <>
+              <div className="flex items-center space-x-2">
+                <span className="text-gray-900 dark:text-white">
+                  Welcome, <span className="text-red-500">{user.username}</span>
+                </span>
+                {user.roles.map((role, index) => (
+                  <div key={index} className="badge text-xs badge-accent">
+                    {role}
+                  </div>
+                ))}
+              </div>
+              <UserProfile />
+            </>
           ) : (
             <div className="flex space-x-4">
-              <a
-                href={`/Register`}
+              <Link
+                to="/register"
                 className="py-2 px-4 bg-[#22c55e] text-white rounded hover:bg-[#16a34a] focus:outline-none focus:ring-2 focus:ring-[#16a34a] focus:ring-offset-2 transition duration-300"
               >
                 Register
-              </a>
-              <a
-                href={`/Login`}
+              </Link>
+              <Link
+                to="/login"
                 className="py-2 px-4 bg-[#22c55e] text-white rounded hover:bg-[#16a34a] focus:outline-none focus:ring-2 focus:ring-[#16a34a] focus:ring-offset-2 transition duration-300"
               >
                 Login
-              </a>
+              </Link>
             </div>
           )}
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Nav;

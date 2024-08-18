@@ -10,6 +10,7 @@ function Register() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);  // State to handle loading
 
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);  // Set loading to true when the request starts
 
     try {
       const response = await AuthService.register(user.username, user.email, user.password);
@@ -38,12 +40,14 @@ function Register() {
 
       Swal.fire({
         title: 'Error!',
-        text: 'Registration failed. Please try again.',
+        text: 'Registration failed. Please check your inputs and try again.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
 
-      setError("Registration failed. Please try again.");
+      setError("Registration failed. Please check your inputs and try again.");
+    } finally {
+      setLoading(false);  // Set loading to false after the request completes
     }
   };
 
@@ -61,6 +65,7 @@ function Register() {
             <input
               type="email"
               name="email"
+              value={user.email}  // Add value to input for controlled component
               onChange={handleChange}
               required
               placeholder="Email"
@@ -71,6 +76,7 @@ function Register() {
             <input
               type="text"
               name="username"
+              value={user.username}  // Add value to input for controlled component
               onChange={handleChange}
               required
               placeholder="Username"
@@ -81,6 +87,7 @@ function Register() {
             <input
               type="password"
               name="password"
+              value={user.password}  // Add value to input for controlled component
               onChange={handleChange}
               required
               placeholder="Password"
@@ -90,9 +97,10 @@ function Register() {
           <div className="flex justify-between">
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-[#22c55e] text-white rounded-md hover:bg-[#16a34a] focus:outline-none focus:ring-2 focus:ring-[#16a34a] focus:ring-offset-2 transition duration-300"
+              disabled={loading}  // Disable button when loading
+              className={`w-full py-2 px-4 ${loading ? 'bg-gray-400' : 'bg-[#22c55e]'} text-white rounded-md hover:${loading ? 'bg-gray-500' : 'bg-[#16a34a]'} focus:outline-none focus:ring-2 focus:ring-[#16a34a] focus:ring-offset-2 transition duration-300`}
             >
-              Register
+              {loading ? 'Registering...' : 'Register'}
             </button>
             <button
               type="button"

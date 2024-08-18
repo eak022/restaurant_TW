@@ -1,26 +1,48 @@
-import React from 'react';
+import React from "react";
+import { useAuthContext } from "../context/AuthContext"; // Adjust the path as needed
+//import { useNavigate } from "react-router-dom"; //
 
-function UserProfile({ onButtonClick, onButtonEnter }) {
+const UserProfile = () => {
+  const { logout } = useAuthContext();
+  ////const navigate = useNavigate;
+
+  const handleLogout = () => {
+    logout();
+    //navigate("/"); 
+  };
+
   return (
-    <button
-      type="button"
-      className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-      id="user-menu-button"
-      onClick={onButtonClick}
-      onKeyUp={(e) => e.key === ' ' && onButtonEnter()}
-      onKeyDown={(e) => e.key === 'Enter' && onButtonEnter()}
-      aria-expanded="false"
-      aria-haspopup="true"
-    >
-      <span className="absolute -inset-1.5"></span>
-      <span className="sr-only">Open user menu</span>
-      <img
-        className="h-8 w-8 rounded-full"
-        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-        alt="User profile"
-      />
-    </button>
+    <div className="dropdown dropdown-end">
+      {/* Avatar button */}
+      <div
+        tabIndex={0}
+        role="button"
+        className="btn btn-ghost btn-circle avatar p-1" // Reduce padding
+      >
+        <div className="w-10 h-10 rounded-full overflow-hidden"> {/* Reduce size */}
+          <img
+            alt="User Profile"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-32 p-1 shadow-lg" // Reduce size and padding
+      >
+        <li>
+          <a 
+            onClick={handleLogout}
+            className="text-sm py-1 px-2" // Reduce text size and padding
+          >
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
   );
-}
+};
 
 export default UserProfile;
